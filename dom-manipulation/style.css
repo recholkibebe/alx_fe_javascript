@@ -1,8 +1,8 @@
 // Sample array of quotes
 let quotes = [
-  { text: "Be yourself; everyone else is already taken.", category: "Inspiration" },
-    { text: "The only way to do great work is to love what you do.", category: "Work" },
-      { text: "Life is what happens when you're busy making other plans.", category: "Life" },
+  { text: "Through hardship to the stars.": "Inspiration" },
+    { text: "Knowledge is power.", category: "School" },
+      { text: "Remember that you will die.", category: "Life" },
       ];
 
       // Function to display a random quote
