@@ -1,4 +1,4 @@
-// Load quotes from localStorage or use default ones
+// Load quotes from localStorage or use defaults
 // let quotes = JSON.parse(localStorage.getItem("quotes")) || [
 //   { text: "Through hardship to the stars.", category: "Inspiration" },
 //     { text: "Knowledge is power.", category: "School" },
@@ -10,7 +10,7 @@
 //         localStorage.setItem("quotes", JSON.stringify(quotes));
 //         }
 //
-//         // Display a quote from selected category
+//         // Display a random quote based on selected category
 //         function showRandomQuote() {
 //           const selectedCategory = document.getElementById("categoryFilter")?.value || "all";
 //             const filteredQuotes = selectedCategory === "all"
@@ -37,197 +37,174 @@
 //                                                     const quoteCategory = document.getElementById("newQuoteCategory").value.trim();
 //
 //                                                       if (quoteText && quoteCategory) {
-//                                                           quotes.push({ text: quoteText, category: quoteCategory });
-//                                                               saveQuotes();
-//                                                                   document.getElementById("newQuoteText").value = "";
-//                                                                       document.getElementById("newQuoteCategory").value = "";
-//                                                                           populateCategories(); // update dropdown
-//                                                                               showRandomQuote();
-//                                                                                 } else {
-//                                                                                     alert("Please enter both quote and category.");
-//                                                                                       }
-//                                                                                       }
+//                                                           const newQuote = { text: quoteText, category: quoteCategory };
+//                                                               quotes.push(newQuote);
+//                                                                   saveQuotes();
+//                                                                       populateCategories();
+//                                                                           showRandomQuote();
+//                                                                               document.getElementById("newQuoteText").value = "";
+//                                                                                   document.getElementById("newQuoteCategory").value = "";
 //
-//                                                                                       // Create add-quote form
-//                                                                                       function createAddQuoteForm() {
-//                                                                                         const formContainer = document.createElement("div");
+//                                                                                       postQuoteToServer(newQuote); // Post to mock server
+//                                                                                         } else {
+//                                                                                             alert("Please enter both quote and category.");
+//                                                                                               }
+//                                                                                               }
 //
-//                                                                                           const quoteInput = document.createElement("input");
-//                                                                                             quoteInput.id = "newQuoteText";
-//                                                                                               quoteInput.placeholder = "Enter a new quote";
+//                                                                                               // Create add-quote form
+//                                                                                               function createAddQuoteForm() {
+//                                                                                                 const formContainer = document.createElement("div");
 //
-//                                                                                                 const categoryInput = document.createElement("input");
-//                                                                                                   categoryInput.id = "newQuoteCategory";
-//                                                                                                     categoryInput.placeholder = "Enter quote category";
+//                                                                                                   const quoteInput = document.createElement("input");
+//                                                                                                     quoteInput.id = "newQuoteText";
+//                                                                                                       quoteInput.placeholder = "Enter a new quote";
 //
-//                                                                                                       const addButton = document.createElement("button");
-//                                                                                                         addButton.textContent = "Add Quote";
-//                                                                                                           addButton.addEventListener("click", addQuote);
+//                                                                                                         const categoryInput = document.createElement("input");
+//                                                                                                           categoryInput.id = "newQuoteCategory";
+//                                                                                                             categoryInput.placeholder = "Enter quote category";
 //
-//                                                                                                             formContainer.appendChild(quoteInput);
-//                                                                                                               formContainer.appendChild(categoryInput);
-//                                                                                                                 formContainer.appendChild(addButton);
+//                                                                                                               const addButton = document.createElement("button");
+//                                                                                                                 addButton.textContent = "Add Quote";
+//                                                                                                                   addButton.addEventListener("click", addQuote);
 //
-//                                                                                                                   document.body.appendChild(formContainer);
-//                                                                                                                   }
+//                                                                                                                     formContainer.appendChild(quoteInput);
+//                                                                                                                       formContainer.appendChild(categoryInput);
+//                                                                                                                         formContainer.appendChild(addButton);
 //
-//                                                                                                                   // Populate dropdown with unique categories
-//                                                                                                                   function populateCategories() {
-//                                                                                                                     const categoryFilter = document.getElementById("categoryFilter");
-//                                                                                                                       if (!categoryFilter) return;
+//                                                                                                                           document.body.appendChild(formContainer);
+//                                                                                                                           }
 //
-//                                                                                                                         const uniqueCategories = [...new Set(quotes.map(q => q.category))];
-//                                                                                                                           categoryFilter.innerHTML = '<option value="all">All Categories</option>';
-//                                                                                                                             uniqueCategories.forEach(category => {
-//                                                                                                                                 const option = document.createElement("option");
-//                                                                                                                                     option.value = category;
-//                                                                                                                                         option.textContent = category;
-//                                                                                                                                             categoryFilter.appendChild(option);
-//                                                                                                                                               });
+//                                                                                                                           // Populate category dropdown
+//                                                                                                                           function populateCategories() {
+//                                                                                                                             const categoryFilter = document.getElementById("categoryFilter");
+//                                                                                                                               if (!categoryFilter) return;
 //
-//                                                                                                                                                 const savedCategory = localStorage.getItem("selectedCategory");
-//                                                                                                                                                   if (savedCategory) {
-//                                                                                                                                                       categoryFilter.value = savedCategory;
-//                                                                                                                                                         }
-//                                                                                                                                                         }
+//                                                                                                                                 const uniqueCategories = [...new Set(quotes.map(q => q.category))];
+//                                                                                                                                   categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+//                                                                                                                                     uniqueCategories.forEach(category => {
+//                                                                                                                                         const option = document.createElement("option");
+//                                                                                                                                             option.value = category;
+//                                                                                                                                                 option.textContent = category;
+//                                                                                                                                                     categoryFilter.appendChild(option);
+//                                                                                                                                                       });
 //
-//                                                                                                                                                         // Filter and display quote by category
-//                                                                                                                                                         function filterQuotes() {
-//                                                                                                                                                           const selectedCategory = document.getElementById("categoryFilter").value;
-//                                                                                                                                                             localStorage.setItem("selectedCategory", selectedCategory);
-//                                                                                                                                                               showRandomQuote();
-//                                                                                                                                                               }
+//                                                                                                                                                         const savedCategory = localStorage.getItem("selectedCategory");
+//                                                                                                                                                           if (savedCategory) {
+//                                                                                                                                                               categoryFilter.value = savedCategory;
+//                                                                                                                                                                 }
+//                                                                                                                                                                 }
 //
-//                                                                                                                                                               // Export quotes to JSON file
-//                                                                                                                                                               function exportToJsonFile() {
-//                                                                                                                                                                 const dataStr = JSON.stringify(quotes, null, 2);
-//                                                                                                                                                                   const blob = new Blob([dataStr], { type: "application/json" });
-//                                                                                                                                                                     const url = URL.createObjectURL(blob);
+//                                                                                                                                                                 // Filter quotes by category
+//                                                                                                                                                                 function filterQuotes() {
+//                                                                                                                                                                   const selectedCategory = document.getElementById("categoryFilter").value;
+//                                                                                                                                                                     localStorage.setItem("selectedCategory", selectedCategory);
+//                                                                                                                                                                       showRandomQuote();
+//                                                                                                                                                                       }
 //
-//                                                                                                                                                                       const a = document.createElement("a");
-//                                                                                                                                                                         a.href = url;
-//                                                                                                                                                                           a.download = "quotes.json";
-//                                                                                                                                                                             a.click();
-//                                                                                                                                                                               URL.revokeObjectURL(url);
-//                                                                                                                                                                               }
+//                                                                                                                                                                       // Export quotes to JSON
+//                                                                                                                                                                       function exportToJsonFile() {
+//                                                                                                                                                                         const dataStr = JSON.stringify(quotes, null, 2);
+//                                                                                                                                                                           const blob = new Blob([dataStr], { type: "application/json" });
+//                                                                                                                                                                             const url = URL.createObjectURL(blob);
 //
-//                                                                                                                                                                               // Import quotes from uploaded JSON file
-//                                                                                                                                                                               function importFromJsonFile(event) {
-//                                                                                                                                                                                 const fileReader = new FileReader();
-//                                                                                                                                                                                   fileReader.onload = function (e) {
-//                                                                                                                                                                                       try {
-//                                                                                                                                                                                             const importedQuotes = JSON.parse(e.target.result);
-//                                                                                                                                                                                                   if (Array.isArray(importedQuotes)) {
-//                                                                                                                                                                                                           quotes.push(...importedQuotes);
-//                                                                                                                                                                                                                   saveQuotes();
-//                                                                                                                                                                                                                           alert("Quotes imported successfully!");
-//                                                                                                                                                                                                                                   populateCategories();
-//                                                                                                                                                                                                                                           showRandomQuote();
-//                                                                                                                                                                                                                                                 } else {
-//                                                                                                                                                                                                                                                         alert("Invalid file format.");
-//                                                                                                                                                                                                                                                               }
-//                                                                                                                                                                                                                                                                   } catch {
-//                                                                                                                                                                                                                                                                         alert("Could not parse file.");
-//                                                                                                                                                                                                                                                                             }
-//                                                                                                                                                                                                                                                                               };
-//                                                                                                                                                                                                                                                                                 fileReader.readAsText(event.target.files[0]);
-//                                                                                                                                                                                                                                                                                 }
+//                                                                                                                                                                               const a = document.createElement("a");
+//                                                                                                                                                                                 a.href = url;
+//                                                                                                                                                                                   a.download = "quotes.json";
+//                                                                                                                                                                                     a.click();
+//                                                                                                                                                                                       URL.revokeObjectURL(url);
+//                                                                                                                                                                                       }
 //
-//                                                                                                                                                                                                                                                                                 // Add event listeners
-//                                                                                                                                                                                                                                                                                 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
-//                                                                                                                                                                                                                                                                                 document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
-//                                                                                                                                                                                                                                                                                 document.getElementById("exportBtn").addEventListener("click", exportToJsonFile);
-//                                                                                                                                                                                                                                                                                 document.getElementById("importFile").addEventListener("change", importFromJsonFile);
+//                                                                                                                                                                                       // Import quotes from JSON
+//                                                                                                                                                                                       function importFromJsonFile(event) {
+//                                                                                                                                                                                         const fileReader = new FileReader();
+//                                                                                                                                                                                           fileReader.onload = function (e) {
+//                                                                                                                                                                                               try {
+//                                                                                                                                                                                                     const importedQuotes = JSON.parse(e.target.result);
+//                                                                                                                                                                                                           if (Array.isArray(importedQuotes)) {
+//                                                                                                                                                                                                                   quotes.push(...importedQuotes);
+//                                                                                                                                                                                                                           saveQuotes();
+//                                                                                                                                                                                                                                   alert("Quotes imported successfully!");
+//                                                                                                                                                                                                                                           populateCategories();
+//                                                                                                                                                                                                                                                   showRandomQuote();
+//                                                                                                                                                                                                                                                         } else {
+//                                                                                                                                                                                                                                                                 alert("Invalid JSON file.");
+//                                                                                                                                                                                                                                                                       }
+//                                                                                                                                                                                                                                                                           } catch {
+//                                                                                                                                                                                                                                                                                 alert("Error parsing file.");
+//                                                                                                                                                                                                                                                                                     }
+//                                                                                                                                                                                                                                                                                       };
+//                                                                                                                                                                                                                                                                                         fileReader.readAsText(event.target.files[0]);
+//                                                                                                                                                                                                                                                                                         }
 //
-//                                                                                                                                                                                                                                                                                 // Initialize
-//                                                                                                                                                                                                                                                                                 createAddQuoteForm();
-//                                                                                                                                                                                                                                                                                 populateCategories();
+//                                                                                                                                                                                                                                                                                         // ----------------------
+//                                                                                                                                                                                                                                                                                         // Server Sync & Conflict
+//                                                                                                                                                                                                                                                                                         // ----------------------
 //
-//                                                                                                                                                                                                                                                                                 // Show last viewed quote on load
-//                                                                                                                                                                                                                                                                                 const lastQuote = sessionStorage.getItem("lastQuote");
-//                                                                                                                                                                                                                                                                                 if (lastQuote) {
-//                                                                                                                                                                                                                                                                                   const quote = JSON.parse(lastQuote);
-//                                                                                                                                                                                                                                                                                     document.getElementById("quoteDisplay").innerHTML = `
-//                                                                                                                                                                                                                                                                                         <blockquote>"${quote.text}"</blockquote>
-//                                                                                                                                                                                                                                                                                             <p><strong>Category:</strong> ${quote.category}</p>
-//                                                                                                                                                                                                                                                                                               `;
-//                                                                                                                                                                                                                                                                                               } else {
-//                                                                                                                                                                                                                                                                                                 showRandomQuote();
-//                                                                                                                                                                                                                                                                                                 }
-/// Simulated server data
-//const simulatedServerQuotes = [
-//  { text: "Success is not final, failure is not fatal.", category: "Motivation" },
-//    { text: "The only way to do great work is to love what you do.", category: "Work" }
-//    ];
+//                                                                                                                                                                                                                                                                                         // Mock API URL for POST simulation
+//                                                                                                                                                                                                                                                                                         const mockApiUrl = "https://jsonplaceholder.typicode.com/posts";
 //
-//    // Simulate fetching data from server
-//    function fetchFromServer() {
-//      return new Promise((resolve) => {
-//          setTimeout(() => {
-//                resolve(simulatedServerQuotes);
-//                    }, 1000); // simulate network delay
-//                      });
-//                      }
+//                                                                                                                                                                                                                                                                                         // Simulate fetching quotes from server
+//                                                                                                                                                                                                                                                                                         async function fetchQuotesFromServer() {
+//                                                                                                                                                                                                                                                                                           return [
+//                                                                                                                                                                                                                                                                                               { text: "Success is not final, failure is not fatal.", category: "Motivation" },
+//                                                                                                                                                                                                                                                                                                   { text: "The only way to do great work is to love what you do.", category: "Work" }
+//                                                                                                                                                                                                                                                                                                     ];
+//                                                                                                                                                                                                                                                                                                     }
 //
-//                      // Sync local data with server data
-//                      async function syncWithServer() {
-//                        const serverQuotes = await fetchFromServer();
-//                          const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+//                                                                                                                                                                                                                                                                                                     // Simulate posting a quote to the server
+//                                                                                                                                                                                                                                                                                                     async function postQuoteToServer(quote) {
+//                                                                                                                                                                                                                                                                                                       try {
+//                                                                                                                                                                                                                                                                                                           await fetch(mockApiUrl, {
+//                                                                                                                                                                                                                                                                                                                 method: "POST",
+//                                                                                                                                                                                                                                                                                                                       headers: { "Content-Type": "application/json" },
+//                                                                                                                                                                                                                                                                                                                             body: JSON.stringify(quote)
+//                                                                                                                                                                                                                                                                                                                                 });
+//                                                                                                                                                                                                                                                                                                                                   } catch (error) {
+//                                                                                                                                                                                                                                                                                                                                       console.error("Failed to post quote to server:", error);
+//                                                                                                                                                                                                                                                                                                                                         }
+//                                                                                                                                                                                                                                                                                                                                         }
 //
-//                            // Check for differences or new quotes
-//                              const isDifferent = JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes);
+//                                                                                                                                                                                                                                                                                                                                         // Sync local data with server and resolve conflicts
+//                                                                                                                                                                                                                                                                                                                                         async function syncQuotes() {
+//                                                                                                                                                                                                                                                                                                                                           const serverQuotes = await fetchQuotesFromServer();
+//                                                                                                                                                                                                                                                                                                                                             const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
 //
-//                                if (isDifferent) {
-//                                    // Conflict resolution: server data takes priority
-//                                        localStorage.setItem("quotes", JSON.stringify(serverQuotes));
-//                                            quotes = serverQuotes;
-//                                                populateCategories();
-//                                                    showRandomQuote();
-//                                                        alert("Quotes updated from server. Local changes replaced.");
-//                                                          }
-//                                                          }
+//                                                                                                                                                                                                                                                                                                                                               const isDifferent = JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes);
 //
-//                                                          // Run sync every 30 seconds
-//                                                          setInterval(syncWithServer, 30000);
+//                                                                                                                                                                                                                                                                                                                                                 if (isDifferent) {
+//                                                                                                                                                                                                                                                                                                                                                     localStorage.setItem("quotes", JSON.stringify(serverQuotes));
+//                                                                                                                                                                                                                                                                                                                                                         quotes = serverQuotes;
+//                                                                                                                                                                                                                                                                                                                                                             populateCategories();
+//                                                                                                                                                                                                                                                                                                                                                                 showRandomQuote();
+//                                                                                                                                                                                                                                                                                                                                                                     alert("Quotes updated from server. Conflicts resolved.");
+//                                                                                                                                                                                                                                                                                                                                                                       }
+//                                                                                                                                                                                                                                                                                                                                                                       }
 //
-//                                                          // Initial sync on load
-//                                                          syncWithServer();
-//                                                          // Simulated server data
-//                                                          const simulatedServerQuotes = [
-//                                                            { text: "Success is not final, failure is not fatal.", category: "Motivation" },
-//                                                              { text: "The only way to do great work is to love what you do.", category: "Work" }
-//                                                              ];
+//                                                                                                                                                                                                                                                                                                                                                                       // Periodic sync every 30 seconds
+//                                                                                                                                                                                                                                                                                                                                                                       setInterval(syncQuotes, 30000);
 //
-//                                                              // Simulate fetching data from server
-//                                                              function fetchFromServer() {
-//                                                                return new Promise((resolve) => {
-//                                                                    setTimeout(() => {
-//                                                                          resolve(simulatedServerQuotes);
-//                                                                              }, 1000); // simulate network delay
-//                                                                                });
-//                                                                                }
+//                                                                                                                                                                                                                                                                                                                                                                       // ----------------------
+//                                                                                                                                                                                                                                                                                                                                                                       // Event Listeners & Init
+//                                                                                                                                                                                                                                                                                                                                                                       // ----------------------
 //
-//                                                                                // Sync local data with server data
-//                                                                                async function syncWithServer() {
-//                                                                                  const serverQuotes = await fetchFromServer();
-//                                                                                    const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+//                                                                                                                                                                                                                                                                                                                                                                       document.getElementById("newQuote").addEventListener("click", showRandomQuote);
+//                                                                                                                                                                                                                                                                                                                                                                       document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
+//                                                                                                                                                                                                                                                                                                                                                                       document.getElementById("exportBtn").addEventListener("click", exportToJsonFile);
+//                                                                                                                                                                                                                                                                                                                                                                       document.getElementById("importFile").addEventListener("change", importFromJsonFile);
 //
-//                                                                                      // Check for differences or new quotes
-//                                                                                        const isDifferent = JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes);
+//                                                                                                                                                                                                                                                                                                                                                                       // On page load
+//                                                                                                                                                                                                                                                                                                                                                                       createAddQuoteForm();
+//                                                                                                                                                                                                                                                                                                                                                                       populateCategories();
+//                                                                                                                                                                                                                                                                                                                                                                       syncQuotes();
 //
-//                                                                                          if (isDifferent) {
-//                                                                                              // Conflict resolution: server data takes priority
-//                                                                                                  localStorage.setItem("quotes", JSON.stringify(serverQuotes));
-//                                                                                                      quotes = serverQuotes;
-//                                                                                                          populateCategories();
-//                                                                                                              showRandomQuote();
-//                                                                                                                  alert("Quotes updated from server. Local changes replaced.");
-//                                                                                                                    }
-//                                                                                                                    }
+//                                                                                                                                                                                                                                                                                                                                                                       const lastQuote = sessionStorage.getItem("lastQuote");
+//                                                                                                                                                                                                                                                                                                                                                                       if (lastQuote) {
+//                                                                                                                                                                                                                                                                                                                                                                         const quote = JSON.parse(lastQuote);
+//                                                                                                                                                                                                                                                                                                                                                                           document.getElementById("quoteDisplay").innerHTML = `
+//                                                                                                                                                                                                                                                                                                                                                                               <blockquote>"${quote.text}"</blockquote>
+//                                                                                                                                                                                                                                                                                                                                                                                   <p><strong>Category:</strong> ${quote.category}</p>
+//                                                                                                                                                                                                                                                                                                                                                                                     `;
+//                                                                                                                                                                                                                                                                                                                                                                                     } else {
+//                                                                                                                                                                                                                                                                                                                                                                                       showRandomQuote();
+//                                                                                                                                                                                                                                                                                                                                                                                       }
 //
-//                                                                                                                    // Run sync every 30 seconds
-//                                                                                                                    setInterval(syncWithServer, 30000);
-//
-//                                                                                                                    // Initial sync on load
-//                                                                                                                    syncWithServer();
-//                                                                                                                    v/
