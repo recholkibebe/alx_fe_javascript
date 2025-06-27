@@ -154,4 +154,80 @@
 //                                                                                                                                                                                                                                                                                               } else {
 //                                                                                                                                                                                                                                                                                                 showRandomQuote();
 //                                                                                                                                                                                                                                                                                                 }
+/// Simulated server data
+//const simulatedServerQuotes = [
+//  { text: "Success is not final, failure is not fatal.", category: "Motivation" },
+//    { text: "The only way to do great work is to love what you do.", category: "Work" }
+//    ];
 //
+//    // Simulate fetching data from server
+//    function fetchFromServer() {
+//      return new Promise((resolve) => {
+//          setTimeout(() => {
+//                resolve(simulatedServerQuotes);
+//                    }, 1000); // simulate network delay
+//                      });
+//                      }
+//
+//                      // Sync local data with server data
+//                      async function syncWithServer() {
+//                        const serverQuotes = await fetchFromServer();
+//                          const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+//
+//                            // Check for differences or new quotes
+//                              const isDifferent = JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes);
+//
+//                                if (isDifferent) {
+//                                    // Conflict resolution: server data takes priority
+//                                        localStorage.setItem("quotes", JSON.stringify(serverQuotes));
+//                                            quotes = serverQuotes;
+//                                                populateCategories();
+//                                                    showRandomQuote();
+//                                                        alert("Quotes updated from server. Local changes replaced.");
+//                                                          }
+//                                                          }
+//
+//                                                          // Run sync every 30 seconds
+//                                                          setInterval(syncWithServer, 30000);
+//
+//                                                          // Initial sync on load
+//                                                          syncWithServer();
+//                                                          // Simulated server data
+//                                                          const simulatedServerQuotes = [
+//                                                            { text: "Success is not final, failure is not fatal.", category: "Motivation" },
+//                                                              { text: "The only way to do great work is to love what you do.", category: "Work" }
+//                                                              ];
+//
+//                                                              // Simulate fetching data from server
+//                                                              function fetchFromServer() {
+//                                                                return new Promise((resolve) => {
+//                                                                    setTimeout(() => {
+//                                                                          resolve(simulatedServerQuotes);
+//                                                                              }, 1000); // simulate network delay
+//                                                                                });
+//                                                                                }
+//
+//                                                                                // Sync local data with server data
+//                                                                                async function syncWithServer() {
+//                                                                                  const serverQuotes = await fetchFromServer();
+//                                                                                    const localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+//
+//                                                                                      // Check for differences or new quotes
+//                                                                                        const isDifferent = JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes);
+//
+//                                                                                          if (isDifferent) {
+//                                                                                              // Conflict resolution: server data takes priority
+//                                                                                                  localStorage.setItem("quotes", JSON.stringify(serverQuotes));
+//                                                                                                      quotes = serverQuotes;
+//                                                                                                          populateCategories();
+//                                                                                                              showRandomQuote();
+//                                                                                                                  alert("Quotes updated from server. Local changes replaced.");
+//                                                                                                                    }
+//                                                                                                                    }
+//
+//                                                                                                                    // Run sync every 30 seconds
+//                                                                                                                    setInterval(syncWithServer, 30000);
+//
+//                                                                                                                    // Initial sync on load
+//                                                                                                                    syncWithServer();
+//                                                                                                                    v/
