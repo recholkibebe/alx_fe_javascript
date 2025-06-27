@@ -6,7 +6,7 @@
 //       ];
 //
 //       // Function to display a random quote
-//       function displayRandomQuote() {
+//       function showRandomQuote() {
 //         const randomIndex = Math.floor(Math.random() * quotes.length);
 //           const quote = quotes[randomIndex];
 //
@@ -24,7 +24,7 @@
 //
 //                               if (quoteText && quoteCategory) {
 //                                   quotes.push({ text: quoteText, category: quoteCategory });
-//                                       displayRandomQuote();
+//                                       showRandomQuote();
 //                                           document.getElementById("newQuoteText").value = "";
 //                                               document.getElementById("newQuoteCategory").value = "";
 //                                                 }
@@ -54,9 +54,9 @@
 //                                                                             }
 //
 //                                                                             // Attach event listener to the existing button
-//                                                                             document.getElementById("newQuote").addEventListener("click", displayRandomQuote);
+//                                                                             document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 //
 //                                                                             // Initialize form and show a quote on load
 //                                                                             createAddQuoteForm();
-//                                                                             displayRandomQuote();
+//                                                                             showRandomQuote();
 //
